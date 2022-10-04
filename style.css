@@ -20,10 +20,6 @@ header a {
 	border-bottom: 1px dotted #999892;
 }
 
-header a:visited {
-	color: #484848;
-}
-
 footer {
   border-top: 1px solid rgb(206,206,206);
 
