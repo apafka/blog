@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <title>Alan Pafka</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+</head>
+	
+<body>
+  <header>
+  <h1 style="text-align:center">My Blog</h1>  
+	  
+  <h2><a href="https://spiritualwinner.com">Spiritual Winner</a></h2>
+  <p>Spiritual Winner is my passion project to help other seeking souls to live a better life by sharing my thoughts about spirituality and plant medicines through audio and video.</p>
+  
+  <h2><a href="https://www.youtube.com/channel/UCQqglbaQNvM-RGnOSX1VuIw">YouTube and Vlogging</a></h2>
+  <p>I've been vlogging on YouTube for some time now. My initial goals to learn to be a better public speaker, share what I've healed with plant medicines, be as transparent as I possibly had the balls to be and to ship as often as I could.</p>  
+  
+  <h2><a href="https://alanpafka.com/blog/firstentry>My First Entry</a></h2>
+  <p>For over a decade I've been on a journey with plant medicines. I've healed a lot of trauma and inspired me to play the guitar and chant.</p>	  	  
+
+  </article>
+</body>
+</html>
