@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat vs Dog Ball Game</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
+        canvas { border: 1px solid #000; background-color: #90ee90; } /* Green field */
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game settings
+        const playerSize = 20; // Radius for players and ball
+        const goalWidth = 10;
+        const goalHeight = 100;
+        const speed = 5;
+        const ballSpeed = 3;
+
+        // Initial positions
+        let cat = { x: 100, y: canvas.height / 2, dx: 0, dy: 0 }; // Cat (Player 1, left)
+        let dog = { x: canvas.width - 100, y: canvas.height / 2, dx: 0, dy: 0 }; // Dog (Player 2, right)
+        let ball = { x: canvas.width / 2, y: canvas.height / 2, dx: ballSpeed, dy: 0 };
+
+        // Scores
+        let catScore = 0;
+        let dogScore = 0;
+
+        // Controls
+        const keys = {};
+        document.addEventListener('keydown', (e) => keys[e.key] = true);
+        document.addEventListener('keyup', (e) => keys[e.key] = false);
+
+        function update() {
+            // Move cat (WASD)
+            cat.dx = 0;
+            cat.dy = 0;
+            if (keys['w']) cat.dy = -speed;
+            if (keys['s']) cat.dy = speed;
+            if (keys['a']) cat.dx = -speed;
+            if (keys['d']) cat.dx = speed;
+            cat.x += cat.dx;
+            cat.y += cat.dy;
+
+            // Move dog (Arrow keys)
+            dog.dx = 0;
+            dog.dy = 0;
+            if (keys['ArrowUp']) dog.dy = -speed;
+            if (keys['ArrowDown']) dog.dy = speed;
+            if (keys['ArrowLeft']) dog.dx = -speed;
+            if (keys['ArrowRight']) dog.dx = speed;
+            dog.x += dog.dx;
+            dog.y += dog.dy;
+
+            // Keep players within bounds
+            cat.x = Math.max(playerSize, Math.min(canvas.width - playerSize, cat.x));
+            cat.y = Math.max(playerSize, Math.min(canvas.height - playerSize, cat.y));
+            dog.x = Math.max(playerSize, Math.min(canvas.width - playerSize, dog.x));
+            dog.y = Math.max(playerSize, Math.min(canvas.height - playerSize, dog.y));
+
+            // Move ball
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Ball wall collisions
+            if (ball.y <= playerSize || ball.y >= canvas.height - playerSize) {
+                ball.dy = -ball.dy;
+            }
+
+            // Check goals
+            if (ball.x <= goalWidth && ball.y > (canvas.height - goalHeight) / 2 && ball.y < (canvas.height + goalHeight) / 2) {
+                dogScore++;
+                resetBall();
+            }
+            if (ball.x >= canvas.width - goalWidth && ball.y > (canvas.height - goalHeight) / 2 && ball.y < (canvas.height + goalHeight) / 2) {
+                catScore++;
+                resetBall();
+            }
+
+            // Player-ball collisions (simple bounce)
+            if (distance(cat, ball) < playerSize * 2) {
+                const angle = Math.atan2(ball.y - cat.y, ball.x - cat.x);
+                ball.dx = ballSpeed * Math.cos(angle);
+                ball.dy = ballSpeed * Math.sin(angle);
+            }
+            if (distance(dog, ball) < playerSize * 2) {
+                const angle = Math.atan2(ball.y - dog.y, ball.x - dog.x);
+                ball.dx = ballSpeed * Math.cos(angle);
+                ball.dy = ballSpeed * Math.sin(angle);
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw goals
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, (canvas.height - goalHeight) / 2, goalWidth, goalHeight); // Left goal
+            ctx.fillRect(canvas.width - goalWidth, (canvas.height - goalHeight) / 2, goalWidth, goalHeight); // Right goal
+
+            // Draw cat (blue circle with 'C')
+            ctx.fillStyle = '#00f';
+            ctx.beginPath();
+            ctx.arc(cat.x, cat.y, playerSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.font = '20px Arial';
+            ctx.fillText('C', cat.x - 5, cat.y + 5);
+
+            // Draw dog (red circle with 'D')
+            ctx.fillStyle = '#f00';
+            ctx.beginPath();
+            ctx.arc(dog.x, dog.y, playerSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.fillText('D', dog.x - 5, dog.y + 5);
+
+            // Draw ball (black circle)
+            ctx.fillStyle = '#000';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, playerSize / 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw scores
+            ctx.fillStyle = '#000';
+            ctx.font = '30px Arial';
+            ctx.fillText(`Cat: ${catScore}`, 20, 40);
+            ctx.fillText(`Dog: ${dogScore}`, canvas.width - 100, 40);
+        }
+
+        function distance(a, b) {
+            return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+        }
+
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx = ballSpeed * (Math.random() > 0.5 ? 1 : -1);
+            ball.dy = ballSpeed * (Math.random() * 2 - 1);
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
