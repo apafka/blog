@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <link rel="stylesheet" href="style.css">
@@ -7,13 +6,182 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="utf-8">
   <link rel="icon" type="image/YFFWSbDe_400x400.jpg" href="/images/YFFWSbDe_400x400.jpg">
+  
+  <style>
+    /* Email Collector Styles */
+    .email-collector {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 40px 30px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      border-radius: 12px;
+      border: 1px solid #333;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .email-collector h2 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-align: center;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .email-collector p {
+      font-size: 16px;
+      color: #aaa;
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .email-input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 16px;
+      background: #1a1a1a;
+      border: 2px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .email-input:focus {
+      border-color: #666;
+      background: #222;
+    }
+
+    .email-input::placeholder {
+      color: #666;
+    }
+
+    .submit-btn {
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .submit-btn:hover {
+      background: #e0e0e0;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      background: #444;
+      color: #888;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .success-message h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .success-message p {
+      color: #aaa;
+      margin-bottom: 0;
+    }
+
+    .error-message {
+      display: none;
+      color: #ff6b6b;
+      font-size: 14px;
+      margin-top: -8px;
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .privacy-note {
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .submit-btn.loading::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      margin-left: 10px;
+      border: 2px solid #000;
+      border-top-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 640px) {
+      .email-collector {
+        margin: 30px 20px;
+        padding: 30px 20px;
+      }
+
+      .email-collector h2 {
+        font-size: 24px;
+      }
+
+      .email-collector p {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
 	
 <body>
   <header>
   <h1 style="text-align:center">ALAN PAFKA</h1>
   <p>Thousands of ceremonies with different plants just to realize that it is all energy and prayer keeps your soul connected to god, and your life good.</p>
-  <p>Alan Pafka has earned something unprecedented: today’s most successful business leaders actively seek him out. They recognize his unique ability to connect their current challenges to centuries of spiritual wisdom.</p>
+  <p>Alan Pafka has earned something unprecedented: today's most successful business leaders actively seek him out. They recognize his unique ability to connect their current challenges to centuries of spiritual wisdom.</p>
   <p>Alan Pafka captures the conversations that can only happen between someone who has studied the craft of spiritual energy and shamanism for nearly two decades and those who need to optimize and master their life force in real time.</p>
   <a href="https://x.com/alanpafka">X Account</a>
   <p></p>
@@ -22,9 +190,108 @@
   <a href="https://frequencydealer.com">"Frequency Dealer: My Trials As a Shaman" book.</a>
   <p></p>
   <a href="https://world.hey.com/pafka">Newsletter</a>
+
+  <!-- Email Subscription Collector -->
+  <div class="email-collector">
+    <div class="form-container">
+      <h2>Get Key Takeaways</h2>
+      <p>Join the community and receive insights from centuries of spiritual wisdom delivered to your inbox.</p>
+      
+      <form class="email-form" id="emailForm">
+        <div class="input-group">
+          <input 
+            type="email" 
+            class="email-input" 
+            id="emailInput"
+            placeholder="Enter your email address"
+            required
+          >
+          <div class="error-message" id="errorMessage">
+            Please enter a valid email address
+          </div>
+        </div>
+        
+        <button type="submit" class="submit-btn" id="submitBtn">
+          Subscribe
+        </button>
+        
+        <p class="privacy-note">
+          We respect your privacy. Unsubscribe at any time.
+        </p>
+      </form>
+    </div>
+
+    <div class="success-message" id="successMessage">
+      <div class="success-icon">✓</div>
+      <h3>You're In!</h3>
+      <p>Check your inbox for a confirmation email. Key takeaways coming your way.</p>
+    </div>
+  </div>
+
   </header>
   <article>
   <p><img src="images/Alan_Pafka.png" width="540" alt="Spirituality"></p>
   </article>
+
+  <script>
+    const form = document.getElementById('emailForm');
+    const emailInput = document.getElementById('emailInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMessage = document.getElementById('errorMessage');
+    const formContainer = document.querySelector('.form-container');
+    const successMessage = document.getElementById('successMessage');
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Validate email on input
+    emailInput.addEventListener('input', function() {
+      if (errorMessage.classList.contains('show')) {
+        errorMessage.classList.remove('show');
+      }
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const email = emailInput.value.trim();
+      
+      // Validate email
+      if (!emailRegex.test(email)) {
+        errorMessage.textContent = 'Please enter a valid email address';
+        errorMessage.classList.add('show');
+        emailInput.focus();
+        return;
+      }
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+      submitBtn.textContent = 'Subscribing';
+
+      try {
+        // Beehiiv API endpoint
+        const beehiivUrl = `https://magic.beehiiv.com/v1/f1137093-4bd6-4de5-94fd-1fd16a373e2f?email=${encodeURIComponent(email)}`;
+        
+        const response = await fetch(beehiivUrl, {
+          method: 'GET',
+          mode: 'no-cors'
+        });
+
+        // Show success message
+        formContainer.style.display = 'none';
+        successMessage.classList.add('show');
+
+      } catch (error) {
+        console.error('Subscription error:', error);
+        errorMessage.textContent = 'Something went wrong. Please try again.';
+        errorMessage.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+        submitBtn.textContent = 'Subscribe';
+      }
+    });
+  </script>
 </body>
 </html>
