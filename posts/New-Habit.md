@@ -1,7 +1,7 @@
-  ---
-  title: New Habit
-  date: April 18, 2026
-  ---
+---
+title: New Habit
+date: April 18, 2026
+---
 
  This is an experimental post. 
 
