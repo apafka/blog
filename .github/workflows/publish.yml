@@ -1,0 +1,34 @@
+name: Publish Post
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'posts/*.md'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Find new markdown file
+        id: find
+        run: |
+          FILE=$(git diff --name-only HEAD~1 HEAD -- 'posts/*.md' | head -1)
+          echo "file=$FILE" >> $GITHUB_OUTPUT
+
+      - name: Run publish script
+        run: python3 scripts/publish.py "${{ steps.find.outputs.file }}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Publish: $(basename ${{ steps.find.outputs.file }} .md)"
+          git push
